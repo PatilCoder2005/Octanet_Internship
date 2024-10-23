@@ -2,146 +2,129 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ATMSimulator
-{
-    private double balance;
-    private String pin;
-    private List<String> transactionHistory;
+public class ATMSimulator {
+    private double balance; // Stores the current balance of the ATM
+    private String pin; // Stores the user's PIN
+    private List<String> transactionHistory; // Keeps track of all transactions
 
-    public ATMSimulator() 
-{
-        this.balance = 0.0; 
-        this.transactionHistory = new ArrayList<>(); 
-
+    // Constructor to initialize 
+    public ATMSimulator() {
+        this.balance = 0.0; // Initial balance is set to 0
+        this.transactionHistory = new ArrayList<>(); // Initialize the transaction history list
     }
 
-    public void setPin(String pin) 
-{
+    // Method to set the user's PIN
+    public void setPin(String pin) {
         this.pin = pin; 
-
-        transactionHistory.add("PIN set.");
-
+        transactionHistory.add("PIN set."); // Adds to transaction history
     }
 
-    public void deposit(double amount) 
-{
-        balance += amount; 
-
-        transactionHistory.add("Deposited: $" + amount); 
-
-        System.out.println("Amount deposited successfully: $" + amount); 
-
+    // Method to deposit an amount into the ATM
+    public void deposit(double amount) {
+        balance += amount; // Increases the balance by the deposited amount
+        transactionHistory.add("Deposited: $" + amount); // Logs the deposit in transaction history
+        System.out.println("Amount deposited successfully: $" + amount); // Confirmation message
     }
 
-    public void withdraw(double amount) 
-{
-        if (amount <= balance)
-{ 
-
-            balance -= amount;
-
-            transactionHistory.add("Withdrew: $" + amount); 
-
-            System.out.println("Amount withdrawn successfully: $" + amount); 
-
+    // Method to withdraw an amount from the ATM
+    public void withdraw(double amount) {
+        // Check if there are sufficient funds for withdrawal
+        if (amount <= balance) { 
+            balance -= amount; // Decreases the balance by the withdrawal amount
+            transactionHistory.add("Withdrew: $" + amount); // Logs the withdrawal in transaction history
+            System.out.println("Amount withdrawn successfully: $" + amount); // Confirmation message
         } else 
 {
-            System.out.println("Insufficient funds."); 
-
+            System.out.println("Insufficient funds."); // Error message for insufficient funds
         }
     }
 
+    // Method to change the user's PIN
     public void changePin(String newPin) 
 {
-        this.pin = newPin; 
-
-        transactionHistory.add("PIN changed."); 
-
+        this.pin = newPin; // Updates the PIN
+        transactionHistory.add("PIN changed."); // Logs the PIN change in transaction history
     }
 
+    // Method to print the current balance
     public void printBalance() 
 {
-        System.out.println("Current balance: $" + balance);
-
+        System.out.println("Current balance: $" + balance); // Displays the current balance
     }
 
-    public void printTransactionHistory() 
-{
+    // Method to print the transaction history
+    public void printTransactionHistory() {
         System.out.println("Transaction History:");
-        for (String transaction : transactionHistory)
+        // Iterates through the transaction history and prints each transaction
+        for (String transaction : transactionHistory) 
 {
             System.out.println(transaction); 
-
         }
     }
 
+    // Method to verify the entered PIN against the stored PIN
     public boolean verifyPin(String inputPin) 
 {
-        return pin.equals(inputPin); 
-
+        return pin.equals(inputPin); // Returns true if the entered PIN matches the stored PIN
     }
 
-    public static void main(String[] args) 
-{
-        Scanner scanner = new Scanner(System.in);
-        ATMSimulator atm = new ATMSimulator(); 
+    // Main method to run the ATM simulator
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); // Creates a Scanner object for user input
+        ATMSimulator atm = new ATMSimulator(); // Creates an instance of ATMSimulator
 
-
+        // Prompt to set the initial PIN
         System.out.println("Set your PIN:");
         String initialPin = scanner.nextLine();
-        atm.setPin(initialPin); 
+        atm.setPin(initialPin); // Sets the initial PIN
 
-
-        while (true)
-{
+        // Main loop for the ATM operations
+        while (true) {
             System.out.println("Enter your PIN:");
-            String inputPin = scanner.nextLine();
+            String inputPin = scanner.nextLine(); // User inputs their PIN
 
-            if (!atm.verifyPin(inputPin)) 
-{
-                System.out.println("Incorrect PIN. Try again.");
-                continue; 
-
+            // Verification of the entered PIN
+            if (!atm.verifyPin(inputPin)) {
+                System.out.println("Incorrect PIN. Try again."); // Error message for incorrect PIN
+                continue; // Prompts user to enter PIN again
             }
 
-            while (true) 
-{
+            // Operations menu loop
+            while (true) {
+                // Display menu options
                 System.out.println("1. Deposit\n2. Withdraw\n3. Check Balance\n4. Change PIN\n5. Transaction History\n6. Exit");
-                int choice = scanner.nextInt();
-                scanner.nextLine(); 
+                int choice = scanner.nextInt(); // User makes a choice
+                scanner.nextLine(); // Clear the buffer
 
-
-                switch (choice) 
-{
+                // Execute based on user choice
+                switch (choice) {
                     case 1:
                         System.out.println("Enter amount to deposit:");
-                        double depositAmount = scanner.nextDouble();
-                        atm.deposit(depositAmount); 
-
+                        double depositAmount = scanner.nextDouble(); // User enters deposit amount
+                        atm.deposit(depositAmount); // Calls deposit method
                         break;
                     case 2:
                         System.out.println("Enter amount to withdraw:");
-                        double withdrawAmount = scanner.nextDouble();
-                        atm.withdraw(withdrawAmount); 
-
+                        double withdrawAmount = scanner.nextDouble(); // User enters withdrawal amount
+                        atm.withdraw(withdrawAmount); // Calls withdraw method
                         break;
                     case 3:
-                        atm.printBalance(); 
+                        atm.printBalance(); // Calls printBalance method
                         break;
                     case 4:
                         System.out.println("Enter new PIN:");
-                        String newPin = scanner.nextLine();
-                        atm.changePin(newPin); 
+                        String newPin = scanner.nextLine(); // User enters a new PIN
+                        atm.changePin(newPin); // Calls changePin method
                         break;
                     case 5:
-                        atm.printTransactionHistory();
+                        atm.printTransactionHistory(); // Calls printTransactionHistory method
                         break;
                     case 6:
                         System.out.println("Exiting...");
-                        scanner.close();
-                        return; 
+                        scanner.close(); // Closes the scanner
+                        return; // Exits the program
                     default:
-                        System.out.println("Invalid choice. Try again.");
+                        System.out.println("Invalid choice. Try again."); // Error message for invalid choice
                 }
             }
         }
