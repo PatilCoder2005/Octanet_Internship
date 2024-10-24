@@ -94,7 +94,7 @@ public class ATMSimulator {
                 // Display menu options
                 System.out.println("1. Deposit\n2. Withdraw\n3. Check Balance\n4. Change PIN\n5. Transaction History\n6. Exit");
                 int choice = scanner.nextInt(); // User makes a choice
-                scanner.nextLine(); // Clear the buffer
+                scanner.nextLine();
 
                 // Execute based on user choice
                 switch (choice) {
@@ -121,10 +121,10 @@ public class ATMSimulator {
                         break;
                     case 6:
                         System.out.println("Exiting...");
-                        scanner.close(); // Closes the scanner
-                        return; // Exits the program
+                        scanner.close(); 
+                        return; 
                     default:
-                        System.out.println("Invalid choice. Try again."); // Error message for invalid choice
+                        System.out.println("Invalid choice. Try again."); // Error message 
                 }
             }
         }
